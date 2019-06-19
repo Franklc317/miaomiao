@@ -1,20 +1,23 @@
 <template>
     <div class="cinema_body">
-        <ul>
-            <li v-for="item in cinemaList" :key="item.id">
-                <div>
-                    <span>{{item.nm}}</span>
-                    <span class="q"><span class="price">{{item.sellPrice}}</span> 元起</span>
-                </div>
-                <div class="address">
-                    <span>{{item.addr}}</span>
-                    <span>{{item.distance}}</span>
-                </div>
-                <div class="card">
-                    <div v-for="(num,key) in item.tag" v-if="num===1" :key="key" :class="key | classCard(key)">{{key | formatCard(key)}}</div>
-                </div>
-            </li>
-        </ul>
+        <Loading v-if="isLoading" />
+        <Scroller>
+            <ul>
+                <li v-for="item in cinemaList" :key="item.id">
+                    <div>
+                        <span>{{item.nm}}</span>
+                        <span class="q"><span class="price">{{item.sellPrice}}</span> 元起</span>
+                    </div>
+                    <div class="address">
+                        <span>{{item.addr}}</span>
+                        <span>{{item.distance}}</span>
+                    </div>
+                    <div class="card">
+                        <div v-for="(num,key) in item.tag" v-if="num===1" :key="key" :class="key | classCard(key)">{{key | formatCard(key)}}</div>
+                    </div>
+                </li>
+            </ul>
+        </Scroller>
     </div>
 </template>
 
@@ -23,7 +26,8 @@ export default {
     name : 'cinemalist',
     data(){
         return {
-            cinemaList:[]
+            cinemaList:[],
+            isLoading:'true'
         }
     },
     mounted(){
@@ -31,7 +35,8 @@ export default {
             var msg=res.data.msg;
             var cinemas=res.data.data.cinemas;
             if(msg==="ok"){
-                this.cinemaList=cinemas
+                this.cinemaList=cinemas;
+                this.isLoading=false;
             }
         })
     },
