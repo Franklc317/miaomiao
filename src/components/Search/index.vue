@@ -45,8 +45,9 @@ export default {
             // clearTimeout()
             // setTimeout()
             var that=this;
+            var cityId=this.$store.state.city.id;
             this.cancelRequest();
-            this.axios.get('/api/searchList?cityId=10&kw='+newVal,{cancelToken : new this.axios.CancelToken(function executor(c) {
+            this.axios.get('/api/searchList?cityId='+cityId+'&kw='+newVal,{cancelToken : new this.axios.CancelToken(function executor(c) {
                     that.source = c;
                 })} ).then((res)=>{
                 var msg=res.data.msg;

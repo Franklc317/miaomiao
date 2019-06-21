@@ -30,14 +30,21 @@ export default {
         return{
             commingList:[],
             pullDowning:'',
-            isLoading:'true'
+            isLoading:'true',
+            preCityId:-1
         }
     },
-    mounted(){
-        this.axios.get('/api/movieComingList?cityId=10').then((res)=>{
+    activated(){
+        var cityId=this.$store.state.city.id;
+        if(this.preCityId===cityId){
+            return ;
+        }
+        this.isLoading=true;
+        this.axios.get('/api/movieComingList?cityId='+cityId).then((res)=>{
             if(res.data.msg==="ok"){
                 this.commingList=res.data.data.comingList;
                 this.isLoading=false;
+                this.preCityId=cityId;
             }
         })
     },
