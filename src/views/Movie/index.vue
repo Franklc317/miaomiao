@@ -24,14 +24,29 @@
 
 
 <script>
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import { messageBox } from '@/components/JS';
 
 export default {
     name : 'Movie',
     components : {
         Header,
-        Footer
+        Footer,
+    },
+    mounted(){
+        messageBox({
+            title:'定位',
+            content:'成都',
+            cancel:'取消',
+            ok:'确定定位',
+            handleCancel(){
+                console.log(1);
+            },
+            handleOK(){
+                console.log(2)
+            }
+        })
     }
 }
 </script>
