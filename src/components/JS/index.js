@@ -30,7 +30,7 @@ export var messageBox=(function(){
                     document.body.removeChild(vm.$el);
                 },
                 handleOK(){
-                    defaults.handleCancel&&defaults.handleCancel.call(this);
+                    defaults.handleOK&&defaults.handleOK.call(this);
                     document.body.removeChild(vm.$el);
                 }
             }

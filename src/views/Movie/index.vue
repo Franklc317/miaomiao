@@ -35,18 +35,27 @@ export default {
         Footer,
     },
     mounted(){
-        messageBox({
-            title:'定位',
-            content:'成都',
-            cancel:'取消',
-            ok:'确定定位',
-            handleCancel(){
-                console.log(1);
-            },
-            handleOK(){
-                console.log(2)
-            }
-        })
+        setTimeout(() => {
+            this.axios.get('/api/getLocation').then((res)=>{
+                var msg=res.data.msg;
+                if(msg === 'ok'){
+                    var nm=res.data.data.nm;
+                    var id=res.data.data.id;
+                    if(this.$store.state.city.id==id){return};
+                    messageBox({
+                        title:'定位',
+                        content:nm,
+                        cancel:'取消',
+                        ok:'切换定位',
+                        handleOK(){
+                            window.localStorage.setItem('nowNm',nm);
+                            window.localStorage.setItem('nowId',id);
+                            window.location.reload()                       
+                        }
+                    })
+                }
+            })
+        }, 3000);
     }
 }
 </script>
